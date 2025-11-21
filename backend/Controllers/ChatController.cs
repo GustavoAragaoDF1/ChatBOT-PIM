@@ -18,7 +18,10 @@ namespace api_back.Controllers
 
         public ChatController(IConfiguration configuration, ILogger<ChatController> logger, HttpClient httpClient)
         {
-            _apiKey = configuration["GoogleGeminiApiKey"] ?? "";
+            // Tentar carregar da variável de ambiente primeiro, depois do appsettings
+            _apiKey = Environment.GetEnvironmentVariable("GOOGLE_GEMINI_API_KEY") 
+                ?? configuration["GoogleGeminiApiKey"] 
+                ?? "";
             _logger = logger;
             _httpClient = httpClient;
         }
@@ -77,7 +80,11 @@ namespace api_back.Controllers
                 "atualização", "instalação", "desinstalação", "arquivo", "pasta",
                 "documento", "perda de dados", "corrupção", "travado", "congelado",
                 "tela azul", "bsod", "não funciona", "lento", "wifi", "internet",
-                "conexão", "rede"
+                "conexão", "rede", "navegador", "browser", "chrome", "firefox",
+                "edge", "safari", "excel", "word", "powerpoint", "database", "sql",
+                "erro de acesso", "permissão", "script", "código", "vírus", "malware",
+                "antivírus", "firewall", "proxy", "vpn", "ativar", "desativar",
+                "reiniciar", "reinicializar", "boot", "startup", "processo", "serviço"
             };
 
             var lowerMessage = message.ToLower();

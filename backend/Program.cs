@@ -42,9 +42,12 @@ builder.Services.AddSession(options =>
 // Adicionar CORS para permitir requisições do frontend
 builder.Services.AddCors(options =>
 {
+    // Obter URLs permitidas das variáveis de ambiente
+    var frontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL") ?? "http://localhost:6661";
+    
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://192.168.1.113:6661", "http://localhost:6661")
+        policy.WithOrigins(frontendUrl, "http://localhost:6661")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials()

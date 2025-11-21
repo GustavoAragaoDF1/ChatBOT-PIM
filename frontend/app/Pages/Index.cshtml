@@ -219,6 +219,11 @@
     </div>
     
     <script>
+        // Configuração de URL do Backend - pode ser alterada via variável de ambiente
+        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:6660'
+            : 'http://' + window.location.hostname + ':6660';
+        
         const isAdmin = @(Model.IsAdmin ? "true" : "false");
 
         // Ativa uma aba e sincroniza o estado
@@ -277,7 +282,7 @@
             document.getElementById('chatLoading').style.display = 'block';
             
             // Chamar diretamente o backend em vez do handler Razor
-            fetch('http://192.168.1.113:6660/api/chat/send', {
+            fetch(API_BASE_URL + '/api/chat/send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -324,7 +329,7 @@
             loading.style.display = 'block';
             
             // Chamar diretamente a API do backend
-            fetch('http://192.168.1.113:6660/api/users')
+            fetch(API_BASE_URL + '/api/users')
             .then(async (response) => {
                 const text = await response.text();
                 try {
@@ -364,7 +369,7 @@
         
         function deleteUser(userId) {
             if (confirm('Tem certeza que deseja deletar este usuário?')) {
-                fetch('http://192.168.1.113:6660/api/users/' + userId, {
+                fetch(API_BASE_URL + '/api/users/' + userId, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
